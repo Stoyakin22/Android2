@@ -1,0 +1,34 @@
+fun shortener(st: String): String {
+    if (st.isEmpty()) return "" // Базовый случай: пустая строка
+
+    var openIndex = st.indexOf('(')
+    if (openIndex == -1) return st // Нет открывающих скобок
+
+    var closeIndex = st.indexOf(')', openIndex)
+    if (closeIndex == -1) return st // Нет закрывающих скобок
+
+    // Если есть вложенные скобки, обрабатываем их рекурсивно
+    val inner = st.substring(openIndex + 1, closeIndex)
+    val shortenedInner = shortener(inner)
+
+    // Рекурсивно обрабатываем остаток строки
+    val remaining = st.substring(closeIndex + 1)
+    val shortenedRemaining = shortener(remaining)
+
+    return st.substring(0, openIndex) + shortenedInner + shortenedRemaining
+}
+
+
+fun main() {
+    val text1 = "Это (текст внутри скобок) будет удален."
+    val text2 = "Это (первая (вторая) вложенная) скобка."
+    val text3 = "Это (неправильная) скобка )"
+    val text4 = "(Только скобки)"
+    val text5 = "Без скобок"
+
+    println("\"$text1\" -> \"${shortener(text1)}\"")
+    println("\"$text2\" -> \"${shortener(text2)}\"")
+    println("\"$text3\" -> \"${shortener(text3)}\"")
+    println("\"$text4\" -> \"${shortener(text4)}\"")
+    println("\"$text5\" -> \"${shortener(text5)}\"")
+}
