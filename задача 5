@@ -1,1 +1,42 @@
-<iframe src="https://pl.kotl.in/sWWZoquBh"></iframe>
+fun romanToInt(roman: String): Int {
+    val romanMap = mapOf(
+        'I' to 1, 'V' to 5, 'X' to 10, 'L' to 50,
+        'C' to 100, 'D' to 500, 'M' to 1000
+    )
+    var result = 0
+    var prevValue = 0
+    for (i in roman.length - 1 downTo 0) {
+        val currentValue = romanMap[roman[i]] ?: throw IllegalArgumentException("Invalid Roman numeral")
+        if (currentValue < prevValue) {
+            result -= currentValue
+        } else {
+            result += currentValue
+        }
+        prevValue = currentValue
+    }
+    return result
+}
+
+fun main() {
+    val romanNumerals = listOf("III", "IX", "LVIII", "MCMXCIV", "XIX", "MM", "I", "XCIX", "CDXCIX")
+
+    for (roman in romanNumerals) {
+        try {
+            val integer = romanToInt(roman)
+            println("$roman -> $integer")
+            if (integer !in 1..1999) println("Number is outside range 1-1999")
+        } catch (e: IllegalArgumentException) {
+            println("$roman -> Invalid Roman numeral")
+        }
+    }
+
+    //Example of an invalid roman numeral
+    val invalidRoman = "VX"
+    try {
+        val integer = romanToInt(invalidRoman)
+        println("$invalidRoman -> $integer")
+    } catch (e: IllegalArgumentException) {
+        println("$invalidRoman -> Invalid Roman numeral")
+    }
+
+}
