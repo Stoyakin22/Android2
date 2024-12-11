@@ -1,1 +1,19 @@
-<iframe src="https://pl.kotl.in/MMxOkBqOr"></iframe>
+fun maxConsecutiveSpaces(text: String): Int {
+    var maxSpaces = 0
+    var currentSpaces = 0
+    for (char in text) {
+        if (char == ' ') {
+            currentSpaces++
+        } else {
+            maxSpaces = maxOf(maxSpaces, currentSpaces)
+            currentSpaces = 0
+        }
+    }
+    return maxOf(maxSpaces, currentSpaces) // Handle trailing spaces
+}
+
+fun main() {
+    val text = "This is a string  with   multiple spaces.     And some more."
+    val maxCount = maxConsecutiveSpaces(text)
+    println("Maximum consecutive spaces: $maxCount") // Output: 4
+}
