@@ -1,1 +1,20 @@
-<iframe src="https://pl.kotl.in/CBfIqiRT5"></iframe>
+fun cleanedStr(st: String): String {
+    val sb = StringBuilder()
+    for (i in st.indices) {
+        if (st[i] == '@') {
+            if (sb.isNotEmpty()) {
+                sb.deleteCharAt(sb.length - 1)
+            }
+        } else {
+            sb.append(st[i])
+        }
+    }
+    return sb.toString()
+}
+
+fun main() {
+    val testStrings = listOf("гр@оо@лк@оц@ва", "a@bc@d", "@a", "a@", "abc", "@", "")
+    for (testStr in testStrings) {
+        println("\"$testStr\" -> \"${cleanedStr(testStr)}\"")
+    }
+}
