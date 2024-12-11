@@ -1,0 +1,22 @@
+fun caesarCipher(text: String): String {
+    val result = StringBuilder()
+    for (char in text) {
+        if (char.isDigit()) {
+            result.append(((char.digitToInt() + 4) % 10))
+        } else if (char.isLowerCase()) {
+            result.append(('а'.code + (char.code - 'а'.code + 4) % 32).toChar())
+        } else if (char.isUpperCase()) {
+            result.append(('А'.code + (char.code - 'А'.code + 4) % 32).toChar())
+        } else {
+            result.append(char) // Обработка других символов (не цифры и не русские буквы)
+        }
+    }
+    return result.toString()
+}
+
+fun main() {
+    val text = "Привет123мир"
+    val encryptedText = caesarCipher(text)
+    println("Исходный текст: $text")
+    println("Зашифрованный текст: $encryptedText")
+}
